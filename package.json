@@ -1,0 +1,19 @@
+{
+  "name": "nv-informer",
+  "version": "1.0.0",
+  "description": "NV-Informer",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohtuasad/NV-Informer.git"
+  },
+  "author": "Alexey Volkov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rohtuasad/NV-Informer/issues"
+  },
+  "homepage": "https://github.com/rohtuasad/NV-Informer#readme"
+}
