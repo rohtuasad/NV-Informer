@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/rohtuasad/NV-Informer/issues"
   },
-  "homepage": "https://github.com/rohtuasad/NV-Informer#readme"
+  "homepage": "https://github.com/rohtuasad/NV-Informer#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.1",
+    "typescript": "^3.6.3"
+  }
 }
