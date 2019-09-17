@@ -2,9 +2,8 @@
   "name": "nv-informer",
   "version": "1.0.0",
   "description": "NV-Informer",
-  "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,12 @@
   "devDependencies": {
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.1",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
   }
 }
