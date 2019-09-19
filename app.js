@@ -12,9 +12,9 @@ mongoose.connect(configDB.url);
 var app = express();
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "ejs");
-require("./routes/routes.js")(app);
+require("./src/routes/routes.js")(app);
 
 app.use(logger("dev"));
 app.use(express.json());
