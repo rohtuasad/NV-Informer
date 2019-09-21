@@ -5,6 +5,10 @@ module.exports = function(app, passport) {
   app.get("/signup", function(req, res) {
     res.render("signup", { message: req.flash("signupMessage") });
   });
+  app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/");
+  });
   // process the signup form
   app.post(
     "/signup",
