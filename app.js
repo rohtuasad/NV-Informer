@@ -26,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({ secret: "ilovescotchscotchyscotchscotch" }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 require("./src/routes/routes.js")(app, passport);
 
