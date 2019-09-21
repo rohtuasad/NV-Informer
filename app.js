@@ -6,21 +6,28 @@ var logger = require("morgan");
 
 var configDB = require("./config/database.js");
 var mongoose = require("mongoose");
+var passport = require("passport");
+var flash = require("connect-flash");
+var session = require("express-session");
 
 mongoose.connect(configDB.url);
 
 var app = express();
 
+require("./config/passport")(passport);
+
 // view engine setup
 app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "ejs");
-require("./src/routes/routes.js")(app);
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({ secret: "ilovescotchscotchyscotchscotch" }));
+app.use(flash());
+require("./src/routes/routes.js")(app, passport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
