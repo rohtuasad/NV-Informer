@@ -23,6 +23,9 @@ module.exports = function(app, passport) {
       user: req.user // get the user out of session and pass to template
     });
   });
+  app.get("/grant", isLoggedIn, function(req, res) {
+    res.render("grant.ejs");
+  });
   // process the login form
   app.post(
     "/",
