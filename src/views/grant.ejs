@@ -36,9 +36,9 @@
                 <% for(var i=0; i<users.length;i++) {%>
                     <tr>
                       <td><%=users[i].local.login %></td>
-                      <td><input type="checkbox" <%=users[i].local.roles.includes('Admin') ? "checked" : "" %>/></td>
-                      <td><input type="checkbox" <%=users[i].local.roles.includes('User') ? "checked" : ""  %>/></td>
-                      <td><input type="checkbox" <%=users[i].local.roles.includes('Grant') ? "checked" : ""  %>/></td>
+                      <td><input type="checkbox" name="<%=users[i].local.login %>" value="Admin" <%=users[i].local.roles.includes('Admin') ? "checked" : "" %>/></td>
+                      <td><input type="checkbox" name="<%=users[i].local.login %>" value="User" <%=users[i].local.roles.includes('User') ? "checked" : ""  %>/></td>
+                      <td><input type="checkbox" name="<%=users[i].local.login %>" value="Grant" <%=users[i].local.roles.includes('Grant') ? "checked" : ""  %>/></td>
                     </tr>
                   <%} %>
             </tbody>
