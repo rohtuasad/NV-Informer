@@ -23,6 +23,27 @@
       <div class="col-sm-6 col-sm-offset-3">
         <h1><span class="fa fa-sign-in"></span>Grant permissions</h1>
         <form action="/grant" method="post">
+          <table>
+            <thead>
+              <tr>
+                <td>Имя</td>
+                <td>Admin</td>
+                <td>User</td>
+                <td>Grant</td>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i<users.length;i++) {%>
+                    <tr>
+                      <td><%=users[i].local.login %></td>
+                      <td><input type="checkbox" <%=users[i].local.roles.includes('Admin') ? "checked" : "" %>/></td>
+                      <td><input type="checkbox" <%=users[i].local.roles.includes('User') ? "checked" : ""  %>/></td>
+                      <td><input type="checkbox" <%=users[i].local.roles.includes('Grant') ? "checked" : ""  %>/></td>
+                    </tr>
+                  <%} %>
+            </tbody>
+          </table>
+          
           <button type="submit" class="btn btn-warning btn-lg">Save</button>
         </form>
       </div>

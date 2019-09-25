@@ -1,3 +1,5 @@
+var userManager = require("../authorization/userManager");
+
 module.exports = function(app, passport) {
   app.get("/", function(req, res) {
     res.render("index", { message: req.flash("signupMessage") });
@@ -24,7 +26,9 @@ module.exports = function(app, passport) {
     });
   });
   app.get("/grant", isLoggedIn, function(req, res) {
-    res.render("grant.ejs");
+    userManager.getAllUsers(function(err, users) {
+      res.render("grant.ejs", { users: users });
+    });
   });
   // process the login form
   app.post(
