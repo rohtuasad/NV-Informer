@@ -30,6 +30,12 @@ module.exports = function(app, passport) {
       res.render("grant.ejs", { users: users });
     });
   });
+  app.post("/grant", isLoggedIn, function(req, res) {
+    userManager.updatePermissions(req.body, function(users) {
+      console.log(users);
+      res.render("grant.ejs", { users: users });
+    });
+  });
   // process the login form
   app.post(
     "/",
