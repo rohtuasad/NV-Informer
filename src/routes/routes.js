@@ -1,4 +1,5 @@
 var userManager = require("../authorization/userManager");
+var connection = require("../mySql/connection");
 
 module.exports = function(app, passport) {
   app.get("/", function(req, res) {
@@ -36,6 +37,7 @@ module.exports = function(app, passport) {
       res.render("grant.ejs", { users: users });
     });
   });
+  app.get("/gangsters", connection.getGangsters);
   // process the login form
   app.post(
     "/",
