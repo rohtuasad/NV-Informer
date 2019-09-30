@@ -9,28 +9,40 @@ var pool = mysql.createPool({
   debug: false
 });
 
-exports.getGangsters = function(req, res) {
+exports.getGangsters = function(callback) {
   pool.getConnection(function(err, connection) {
     if (err) {
-      res.json({ code: 100, status: "Error in connection database" });
+      callback({});
       return;
     }
 
     console.log("connected as id " + connection.threadId);
 
-    connection.query("select * from gangster", function(err, rows) {
-      connection.release();
-      console.log("err " + err);
-      if (!err) {
-        console.log(rows);
-        res.json(rows);
-      } else {
-        res.json({});
+    connection.query("SET NAMES 'utf8mb4'", (err, response) => {
+      if (err) {
+        console.error(err);
       }
     });
 
+    connection.query(
+      `select g.name, s.health, s.strength, s.agility, s.charisma, s.accuracy, s.damage, s.dzen, g.tlgname from states s, gangster g, (SELECT
+        gangsterid, MAX(time) as time
+      FROM
+        states 
+      GROUP BY
+        gangsterid) as ls where g.gangid in (3, 4, 5, 6) and s.time = ls.time and s.gangsterid = ls.gangsterid and s.gangsterid = g.id order by dzen desc`,
+      function(err, rows) {
+        connection.release();
+        console.log(rows);
+        if (err) {
+          rows = {};
+        }
+        callback(rows);
+      }
+    );
+
     connection.on("error", function(err) {
-      res.json({ code: 100, status: "Error in connection database" });
+      callback({});
       return;
     });
   });

@@ -33,11 +33,14 @@ module.exports = function(app, passport) {
   });
   app.post("/grant", isLoggedIn, function(req, res) {
     userManager.updatePermissions(req.body, function(users) {
-      console.log(users);
       res.render("grant.ejs", { users: users });
     });
   });
-  app.get("/gangsters", connection.getGangsters);
+  app.get("/gangsters", function(req, res) {
+    connection.getGangsters(function(rows) {
+      res.render("gangsters.ejs", { gangsters: rows });
+    });
+  });
   // process the login form
   app.post(
     "/",
