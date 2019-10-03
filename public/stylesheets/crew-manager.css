@@ -27,7 +27,7 @@ ul {
   flex: 1;
   margin: 0 10px;
   position: relative;
-  background: rgba(0, 0, 0, 0.2);
+  background: #f9f9f9;
   overflow: hidden;
 }
 @media (max-width: 690px) {
@@ -75,8 +75,8 @@ ul {
 
 .drag-item {
   margin: 10px;
-  height: 100px;
-  background: rgba(0, 0, 0, 0.4);
+  height: 30px;
+  background: #c0c0c0;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .drag-item.is-moving {

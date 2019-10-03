@@ -42,7 +42,9 @@ module.exports = function(app, passport) {
     });
   });
   app.get("/manager", function(req, res) {
-    res.render("manager.ejs");
+    connection.getGangstersShort(function(rows) {
+      res.render("manager.ejs", { gangsters: rows });
+    });
   });
   // process the login form
   app.post(
