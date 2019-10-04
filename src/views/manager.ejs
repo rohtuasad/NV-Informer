@@ -19,13 +19,14 @@
         <h1><span class="fa fa-sign-in"></span>Crew manager</h1>
         <div class="drag-container">
           <ul class="drag-list">
+			<% for(var columns=1; columns<=4;columns++) { %>	
             <li class="drag-column">
               <span class="drag-column-header">
 				<h3>One</h3>
-				<p><span>БМ: </span><span id="bm1"></span></p>
+				<p><span>БМ: </span><span id="bm<%=columns%>"></span></p>
                 <svg
                   class="drag-header-more"
-                  data-target="options1"
+                  data-target="options<%=columns%>"
                   fill="#FFFFFF"
                   height="24"
                   viewBox="0 0 24 24"
@@ -37,10 +38,10 @@
                   />
                 </svg>
               </span>
-              <div class="drag-options" id="options1"></div>
-              <ul class="drag-inner-list" id="1">
+              <div class="drag-options" id="options<%=columns%>"></div>
+              <ul class="drag-inner-list" id="<%=columns%>">
 				  <% for(var i=0; i<gangsters.length;i++) { %>						
-						<% if(gangsters[i].group_id == 1) { %>
+						<% if(gangsters[i].group_id == columns) { %>
 							<li class="drag-item" data-name="<%=gangsters[i].name %>" data-bm="<%=gangsters[i].bm %>">
 								<%=gangsters[i].name %><br/> ⚔️<%=gangsters[i].bm %> 🏵<%=gangsters[i].dzen %> 
 							  </li> 
@@ -48,95 +49,8 @@
 				  <%} %>
 			  </ul>
 			</li>
-			<li class="drag-column">
-					<span class="drag-column-header">
-					  <h3>Two</h3>
-					  <p><span>БМ: </span><span id="bm2"></span></p>
-					  <svg
-						class="drag-header-more"
-						data-target="options2"
-						fill="#FFFFFF"
-						height="24"
-						viewBox="0 0 24 24"
-						width="24"
-					  >
-						<path d="M0 0h24v24H0z" fill="none" />
-						<path
-						  d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-						/>
-					  </svg>
-					</span>
-					<div class="drag-options" id="options2"></div>
-					<ul class="drag-inner-list" id="2">
-						<% for(var i=0; i<gangsters.length;i++) {%>
-								<% if(gangsters[i].group_id == 2) { %>
-									<li class="drag-item" data-name="<%=gangsters[i].name %>" data-bm="<%=gangsters[i].bm %>">
-										<%=gangsters[i].name %><br/> ⚔️<%=gangsters[i].bm %> 🏵<%=gangsters[i].dzen %> 
-									  </li> 
-									<% } %>
-						<%} %>
-					</ul>
-				  </li>
-
-				  <li class="drag-column">
-						<span class="drag-column-header">
-						  <h3>Three</h3>
-						  <p><span>БМ: </span><span id="bm3"></span></p>
-						  <svg
-							class="drag-header-more"
-							data-target="options3"
-							fill="#FFFFFF"
-							height="24"
-							viewBox="0 0 24 24"
-							width="24"
-						  >
-							<path d="M0 0h24v24H0z" fill="none" />
-							<path
-							  d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-							/>
-						  </svg>
-						</span>
-						<div class="drag-options" id="options3"></div>
-						<ul class="drag-inner-list" id="3">
-							<% for(var i=0; i<gangsters.length;i++) {%>
-								<% if(gangsters[i].group_id == 3) { %>
-								  <li class="drag-item" data-name="<%=gangsters[i].name %>" data-bm="<%=gangsters[i].bm %>">
-									  <%=gangsters[i].name %><br/> ⚔️<%=gangsters[i].bm %> 🏵<%=gangsters[i].dzen %> 
-									</li> 
-								<% } %>
-							<%} %>
-						</ul>
-					  </li>
-
-					  <li class="drag-column">
-							<span class="drag-column-header">
-							  <h3>Four</h3>
-							  <p><span>БМ: </span><span id="bm4"></span></p>
-							  <svg
-								class="drag-header-more"
-								data-target="options4"
-								fill="#FFFFFF"
-								height="24"
-								viewBox="0 0 24 24"
-								width="24"
-							  >
-								<path d="M0 0h24v24H0z" fill="none" />
-								<path
-								  d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-								/>
-							  </svg>
-							</span>
-							<div class="drag-options" id="options4"></div>
-							<ul class="drag-inner-list" id="4">
-								<% for(var i=0; i<gangsters.length;i++) {%>
-										<% if(gangsters[i].group_id == 4) { %>
-											<li class="drag-item" data-name="<%=gangsters[i].name %>" data-bm="<%=gangsters[i].bm %>">
-												<%=gangsters[i].name %><br/> ⚔️<%=gangsters[i].bm %> 🏵<%=gangsters[i].dzen %> 
-											  </li> 
-								  <% } %>
-								<%} %>
-							</ul>
-						  </li>
+			<%} %>
+			
           </ul>
         </div>
       </div>
