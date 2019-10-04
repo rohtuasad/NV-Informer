@@ -63,7 +63,7 @@ exports.getGangstersShort = function(callback) {
     });
 
     connection.query(
-      `select g.name, (s.health + s.agility + s.charisma + s.accuracy + s.damage) as bm, s.dzen from states s, gangster g, (SELECT
+      `select g.name, g.group_id, (s.health + s.agility + s.charisma + s.accuracy + s.damage) as bm, s.dzen from states s, gangster g, (SELECT
         gangsterid, MAX(time) as time
       FROM
         states 
