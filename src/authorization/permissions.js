@@ -12,7 +12,15 @@ module.exports = function(req, res, next) {
       break;
     }
     case "/gangsters": {
-      console.log(req.user);
+      if (
+        !req.user ||
+        (req.user && !req.user.local.roles.includes(roles.User))
+      ) {
+        res.redirect("/");
+      }
+      break;
+    }
+    case "/manager": {
       if (
         !req.user ||
         (req.user && !req.user.local.roles.includes(roles.User))
