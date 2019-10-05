@@ -63,7 +63,7 @@ exports.getGangstersShort = function(callback) {
     });
 
     connection.query(
-      `select g.name, g.group_id, (s.health + s.agility + s.charisma + s.accuracy + s.damage) as bm, s.dzen from states s, gangster g, (SELECT
+      `select g.id, g.name, g.group_id, (s.health + s.agility + s.charisma + s.accuracy + s.damage) as bm, s.dzen from states s, gangster g, (SELECT
         gangsterid, MAX(time) as time
       FROM
         states 
@@ -77,6 +77,50 @@ exports.getGangstersShort = function(callback) {
         callback(rows);
       }
     );
+
+    connection.on("error", function(err) {
+      callback({});
+      return;
+    });
+  });
+};
+
+exports.updateGroups = function(groups, callback) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      callback({});
+      return;
+    }
+
+    console.log("connected as id " + connection.threadId);
+
+    connection.query("SET NAMES 'utf8mb4'", (err, response) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+    var updateQuery = "";
+
+    for (var i = 0; i < groups.length; i++) {
+      if (groups[i].length > 0) {
+        var ids = [];
+        groups[i].forEach(function(item, index, array) {
+          ids.push(item.id);
+        });
+        var query = `update gangster g set g.group_id = ? where g.id in (?); `;
+        updateQuery += mysql.format(query, [+i + 1, ids]);
+      }
+    }
+
+    connection.query(updateQuery, function(err, rows) {
+      connection.release();
+      if (err) {
+        console.error(err);
+        rows = {};
+      }
+      callback({ success: true });
+    });
 
     connection.on("error", function(err) {
       callback({});

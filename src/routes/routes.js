@@ -46,6 +46,11 @@ module.exports = function(app, passport) {
       res.render("manager.ejs", { gangsters: rows });
     });
   });
+  app.post("/manager", function(req, res) {
+    connection.updateGroups(req.body, function(result) {
+      res.json(result);
+    });
+  });
   // process the login form
   app.post(
     "/",

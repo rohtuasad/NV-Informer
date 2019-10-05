@@ -17,9 +17,11 @@
     <div class="container">
       <div class="col-sm-12">
         <h1><span class="fa fa-sign-in"></span>Crew manager</h1>
+        <button class="btn btn-warning btn-lg" onclick="postData()">
+          Save
+        </button>
         <div class="drag-container">
-          <ul class="drag-list">
-			<% for(var columns=1; columns<=4;columns++) { %>	
+          <ul class="drag-list">	<% for(var columns=1; columns<=4;columns++) { %>	
             <li class="drag-column">
               <span class="drag-column-header">
 				<h3>One</h3>
@@ -42,56 +44,61 @@
               <ul class="drag-inner-list" id="<%=columns%>">
 				  <% for(var i=0; i<gangsters.length;i++) { %>						
 						<% if(gangsters[i].group_id == columns) { %>
-							<li class="drag-item" data-name="<%=gangsters[i].name %>" data-bm="<%=gangsters[i].bm %>">
+							<li class="drag-item" data-id="<%=gangsters[i].id %>" data-name="<%=gangsters[i].name %>" data-bm="<%=gangsters[i].bm %>"  data-dzen="<%=gangsters[i].dzen %>">
 								<%=gangsters[i].name %><br/> ⚔️<%=gangsters[i].bm %> 🏵<%=gangsters[i].dzen %> 
 							  </li> 
 							<% } %>
 				  <%} %>
 			  </ul>
 			</li>
-			<%} %>
-			
-          </ul>
+			<%} %></ul>
         </div>
       </div>
     </div>
     <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js"></script>
     <script id="rendered-js">
-	  var gangsters = <%-JSON.stringify(gangsters)%>;
+      var gangsters = <%-JSON.stringify(gangsters)%>;
 
-	  var initialValue = 0;
-	  var groupCount = 4;
-	  var bmSpan = [];
-		var groups = [];
-		var allBm = [];
-		var columns = [];
+      var initialValue = 0;
+      var groupCount = 4;
+      var bmSpan = [];
+      var groups = [];
+      var allBm = [];
+      var columns = [];
 
-		for (var i = 1; i <= groupCount; i++) {
-			groups.push(gangsters.filter(function(value) {
-			return value.group_id == i;
-		   }));
-		   allBm.push(groups[i - 1].reduce(function(a, b) {
-				return a + (b.bm ? b.bm : 0);
-			}, initialValue));
-			bmSpan.push(document.getElementById("bm" + i));		
-			bmSpan[i - 1].innerText = allBm[i - 1];
-			columns.push(document.getElementById("" + i))
-		}
-	   
+      for (var i = 1; i <= groupCount; i++) {
+      	groups.push(gangsters.filter(function(value) {
+      	return value.group_id == i;
+         }));
+         allBm.push(groups[i - 1].reduce(function(a, b) {
+      		return a + (b.bm ? b.bm : 0);
+      	}, initialValue));
+      	bmSpan.push(document.getElementById("bm" + i));
+      	bmSpan[i - 1].innerText = allBm[i - 1];
+      	columns.push(document.getElementById("" + i))
+      }
+
       dragula(columns)
         .on("drag", function(el) {
-		  // add 'is-moving' class to element being dragged
-		  var groupId = el.parentElement.id - 1; 
-		  allBm[groupId] -= +el.dataset.bm;
-			bmSpan[groupId].innerText = allBm[groupId];
+          // add 'is-moving' class to element being dragged
+          var groupId = el.parentElement.id - 1;
+          allBm[groupId] -= +el.dataset.bm;
+          bmSpan[groupId].innerText = allBm[groupId];
+          
+          groups[groupId] = groups[groupId].filter(function(value) {
+      	    return value.id != el.dataset.id;
+          });
           el.classList.add("is-moving");
         })
         .on("dragend", function(el) {
           // remove 'is-moving' class from element after dragging has stopped
-		  var groupId = el.parentElement.id - 1; 
-		  allBm[groupId] += +el.dataset.bm;
-			bmSpan[groupId].innerText = allBm[groupId];
+          var groupId = el.parentElement.id - 1;
+          allBm[groupId] += +el.dataset.bm;
+          bmSpan[groupId].innerText = allBm[groupId];
           el.classList.remove("is-moving");
+
+          var newGangster = { "id": el.dataset.id, "name": el.dataset.name, "group_id": el.parentElement.id, "bm": el.dataset.bm, "dzen": el.dataset.dzen };
+          groups[groupId].push(newGangster);
 
           // add the 'is-moved' class for 600ms then remove it
           window.setTimeout(function() {
@@ -101,6 +108,20 @@
             }, 600);
           }, 100);
         });
+
+      function postData() {
+        var xhr = new XMLHttpRequest();
+        var url = "";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var json = JSON.parse(xhr.responseText);
+            }
+        };
+        var data = JSON.stringify(groups);
+        xhr.send(data);
+      }
     </script>
   </body>
 </html>
