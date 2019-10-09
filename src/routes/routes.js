@@ -51,6 +51,11 @@ module.exports = function(app, passport) {
       res.json(result);
     });
   });
+  app.get("/raid", function(req, res) {
+    connection.getGangstersShort(function(rows) {
+      res.render("raid.ejs", { gangsters: rows });
+    });
+  });
   // process the login form
   app.post(
     "/",

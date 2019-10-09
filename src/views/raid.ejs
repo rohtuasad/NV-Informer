@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Raid manager</title>
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"
+    />
+    <!-- load bootstrap css -->
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/crew-manager.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-sm-12">
+        <h1><span class="fa fa-sign-in"></span>Raid manager</h1>
+        <div class="drag-container">
+          <ul class="drag-list">	
+              <% for(var columns=1; columns<=4;columns++) { %>	
+            <li class="drag-column">
+              <span class="drag-column-header">				
+                <svg
+                  class="drag-header-more"
+                  data-target="options<%=columns%>"
+                  fill="#FFFFFF"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                  />
+                </svg>
+              </span>
+              <div class="drag-options" id="options<%=columns%>"></div>
+              <ul class="drag-inner-list" id="<%=columns%>">
+				  <% for(var i=0; i<gangsters.length;i++) { %>						
+						<% if(gangsters[i].group_id == columns) { %>
+                        <li class="drag-item" data-name="<%=gangsters[i].name %>" >
+                            <%=gangsters[i].name %>
+                            </li> 
+                        <% } %>
+				  <%} %>
+			  </ul>
+			</li>
+			<%} %></ul>
+        </div>
+      </div>
+    </div>    
+  </body>
+</html>
