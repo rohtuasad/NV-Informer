@@ -94,6 +94,7 @@ ul {
   transform: translateX(100%);
   opacity: 0;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  background-color: #c0c0c0;
 }
 .drag-options.active {
   -webkit-transform: translateX(0);
@@ -153,4 +154,9 @@ ul {
 }
 .section h4 a {
   font-weight: 600;
+}
+
+.drag-options > textarea {
+  width: 100%;
+  height: 250px;
 }

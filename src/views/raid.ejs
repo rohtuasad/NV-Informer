@@ -60,19 +60,13 @@
 	// create the checkbox and labels here, just to keep the html clean. append the <label> to '.drag-options'
 	function create() {
 		for (var i = 0; i < dragOptions.length; i++) {
-      var form = document.createElement('form');
-      form.setAttribute('action', '/raid');
-      form.setAttribute('method', 'post');
-
         var textarea = document.createElement('textarea');
-        form.appendChild(textarea);
 
         var button = document.createElement('button');
-        button.setAttribute('type', 'submit');
-        button.setAttribute('class', 'btn');
+        button.setAttribute('onclick', `postGroupNum(${i})`);
         button.innerText = 'Send';
-        form.appendChild(button);
-				dragOptions[i].appendChild(form);
+        dragOptions[i].appendChild(textarea);
+        dragOptions[i].appendChild(button);
 			};
 		}	
 	
@@ -107,6 +101,20 @@ var showOptions = (function () {
 
 createOptions.create();
 showOptions.init();
+
+function postGroupNum(num) {
+        var xhr = new XMLHttpRequest();
+        var url = "";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var json = JSON.parse(xhr.responseText);
+            }
+        };
+        
+        xhr.send({'num': num});
+      }
     </script>
   </body>
 </html>
