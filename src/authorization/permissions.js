@@ -20,6 +20,15 @@ module.exports = function(req, res, next) {
       }
       break;
     }
+    case "/raidtop": {
+      if (
+        !req.user ||
+        (req.user && !req.user.local.roles.includes(roles.User))
+      ) {
+        res.redirect("/");
+      }
+      break;
+    }
     case "/manager": {
       if (
         !req.user ||
