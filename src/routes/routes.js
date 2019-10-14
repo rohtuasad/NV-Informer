@@ -56,6 +56,11 @@ module.exports = function(app, passport) {
       res.render("raid.ejs", { gangsters: rows });
     });
   });
+  app.get("/raidtop", function(req, res) {
+    connection.getRaidTop(function(rows) {
+      res.render("raidtop.ejs", { gangsters: rows });
+    });
+  });
   // process the login form
   app.post(
     "/",

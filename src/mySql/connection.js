@@ -85,6 +85,39 @@ exports.getGangstersShort = function(callback) {
   });
 };
 
+exports.getRaidTop = function(callback) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      callback({});
+      return;
+    }
+
+    console.log("connected as id " + connection.threadId);
+
+    connection.query("SET NAMES 'utf8mb4'", (err, response) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+    connection.query(
+      `select g.name, count(r.id) as raids from raidFact f, raid r, gangster g where f.raidId = r.id and f.gangsterId = g.id and r.id > ((select max(raidid) from raidFact) - 42) group by g.name order by raids desc`,
+      function(err, rows) {
+        connection.release();
+        if (err) {
+          rows = {};
+        }
+        callback(rows);
+      }
+    );
+
+    connection.on("error", function(err) {
+      callback({});
+      return;
+    });
+  });
+};
+
 exports.updateGroups = function(groups, callback) {
   pool.getConnection(function(err, connection) {
     if (err) {
