@@ -53,15 +53,13 @@
     </div>    
     <script id="rendered-js">
         var createOptions = (function() {
-	var dragOptions = document.querySelectorAll('.drag-options');
-	
-	
+	var dragOptions = document.querySelectorAll('.drag-options');	
 	
 	// create the checkbox and labels here, just to keep the html clean. append the <label> to '.drag-options'
 	function create() {
 		for (var i = 0; i < dragOptions.length; i++) {
         var textarea = document.createElement('textarea');
-
+        textarea.setAttribute('id', `message${i}`);
         var button = document.createElement('button');
         button.setAttribute('onclick', `postGroupNum(${i})`);
         button.innerText = 'Send';
@@ -103,6 +101,7 @@ createOptions.create();
 showOptions.init();
 
 function postGroupNum(num) {
+        var message = document.getElementById(`message${num}`).value;
         var xhr = new XMLHttpRequest();
         var url = "";
         xhr.open("POST", url, true);
@@ -112,8 +111,7 @@ function postGroupNum(num) {
                 var json = JSON.parse(xhr.responseText);
             }
         };
-        
-        xhr.send({'num': num});
+        xhr.send(JSON.stringify({'num': num, 'message' : message}));
       }
     </script>
   </body>

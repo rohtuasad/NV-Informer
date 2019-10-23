@@ -1,5 +1,6 @@
 var userManager = require("../authorization/userManager");
 var connection = require("../mySql/connection");
+var bot = require("../vegas-bot/bot");
 
 module.exports = function(app, passport) {
   app.get("/", function(req, res) {
@@ -54,6 +55,11 @@ module.exports = function(app, passport) {
   app.get("/raid", function(req, res) {
     connection.getGangstersShort(function(rows) {
       res.render("raid.ejs", { gangsters: rows });
+    });
+  });
+  app.post("/raid", function(req, res) {
+    bot.sendGroupMessage(req.body.num, req.body.message, function(result) {
+      res.json(result);
     });
   });
   app.get("/raidtop", function(req, res) {

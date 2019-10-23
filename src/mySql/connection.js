@@ -161,3 +161,39 @@ exports.updateGroups = function(groups, callback) {
     });
   });
 };
+
+exports.getGroupIds = function(num, callback) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      callback({});
+      return;
+    }
+
+    console.log("connected as id " + connection.threadId);
+
+    connection.query("SET NAMES 'utf8mb4'", (err, response) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+    var query = mysql.format(
+      `select g.name, g.tlgid from gangster g where g.group_id = ? and g.gangid in (3, 4, 5, 6)`,
+      num
+    );
+    console.log(query);
+    connection.query(query, function(err, rows) {
+      connection.release();
+      if (err) {
+        console.error(err);
+        rows = {};
+      }
+      callback(rows);
+    });
+
+    connection.on("error", function(err) {
+      callback({});
+      return;
+    });
+  });
+};
