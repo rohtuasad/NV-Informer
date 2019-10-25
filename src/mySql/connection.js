@@ -101,7 +101,8 @@ exports.getRaidTop = function(callback) {
     });
 
     connection.query(
-      `select g.name, count(r.id) as raids from raidFact f, raid r, gangster g where f.raidId = r.id and f.gangsterId = g.id and r.id > ((select max(raidid) from raidFact) - 42) group by g.name order by raids desc`,
+      `select name, SUM(if(placed = true, 1, 0)) as placed, SUM(if(participation = true, 1, 0)) as raids from (select g.name, f.placed, f.participation from raidFact f, raid r, gangster g where 
+        f.raidId = r.id and f.gangsterId = g.id and r.id > ((select max(raidid) from raidFact) - 42)) as w group by name`,
       function(err, rows) {
         connection.release();
         if (err) {
