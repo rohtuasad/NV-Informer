@@ -72,8 +72,8 @@ exports.getRaidTop = function(callback) {
 
     setUtf8Names(connection);
 
-    var query = `select name, SUM(if(placed = true, 1, 0)) as placed, SUM(if(participation = true, 1, 0)) as raids from (select g.name, f.placed, f.participation from raidFact f, raid r, gangster g where 
-        f.raidId = r.id and f.gangsterId = g.id and g.gangid in (3, 4, 5, 6) and r.id > ((select max(raidid) from raidFact) - 42)) as w group by name`;
+    var query = `select name, SUM(if(placed = true, 1, 0)) as placed, SUM(if(participation = true, 1, 0)) as raids, SUM(if(total = true, 1, 0)) as total from (select g.name, f.placed, f.participation, f.placed or f.participation as total from raidFact f, raid r, gangster g where 
+      f.raidId = r.id and f.gangsterId = g.id and g.gangid in (3, 4, 5, 6) and r.id > ((select max(raidid) from raidFact) - 42)) as w group by name`;
     doQuery(connection, query, callback);
 
     connection.on("error", function(err) {
